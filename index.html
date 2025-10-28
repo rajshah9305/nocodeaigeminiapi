@@ -44,7 +44,7 @@
               'dot-pulse': {
                 '0%, 100%': { transform: 'scale(1)', opacity: '0.5' },
                 '50%': { transform: 'scale(1.2)', opacity: '1' },
-              }
+              },
             },
             animation: {
               'fade-in': 'fade-in 0.5s ease-out forwards',
@@ -57,24 +57,34 @@
     <style>
       body {
         background-color: #F3F4F6;
+        overflow: hidden;
+      }
+      .main-container {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+      }
+      .panel {
+        border-radius: 0.75rem; /* lg */
+        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); /* shadow-md */
+        overflow: hidden;
+        border: 1px solid #E5E7EB; /* border-gray-200 */
       }
       .resizer {
-        width: 6px;
+        width: 5px;
         cursor: col-resize;
-        background-color: #F3F4F6;
-        transition: background-color 0.2s ease;
-      }
-      .resizer:hover, .resizer:active {
-        background-color: #E5E7EB;
+        background-color: #F3F4F6; /* gray-100 */
+        flex-shrink: 0;
+        z-index: 10;
+        position: relative;
       }
       .resizer-horizontal {
-        height: 6px;
+        height: 5px;
         cursor: row-resize;
-        background-color: #F3F4F6;
-        transition: background-color 0.2s ease;
-      }
-      .resizer-horizontal:hover, .resizer-horizontal:active {
-        background-color: #E5E7EB;
+        background-color: #F3F4F6; /* gray-100 */
+        flex-shrink: 0;
+        z-index: 10;
+        position: relative;
       }
       .chat-message-container {
         animation: fade-in 0.5s ease-out forwards;
@@ -112,7 +122,8 @@
     "@google/genai": "https://aistudiocdn.com/@google/genai@^1.27.0",
     "file-saver": "https://aistudiocdn.com/file-saver@^2.0.5",
     "lucide-react": "https://aistudiocdn.com/lucide-react@^0.548.0",
-    "@monaco-editor/react": "https://aistudiocdn.com/@monaco-editor/react@^4.7.0"
+    "@monaco-editor/react": "https://aistudiocdn.com/@monaco-editor/react@^4.7.0",
+    "jszip": "https://aistudiocdn.com/jszip@^3.10.1"
   }
 }
 </script>

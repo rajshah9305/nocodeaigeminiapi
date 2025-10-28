@@ -1,6 +1,9 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import type { CodeBundle } from "../types";
 
+// Initialize the AI client once using the environment variable.
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+
 const SYSTEM_INSTRUCTION = `You are an expert web developer specializing in creating single-page applications. Your task is to generate the complete HTML, CSS, and JavaScript code for a web application based on the user's description.
 
 **Instructions:**
@@ -18,7 +21,7 @@ const handleError = (error: unknown): never => {
     console.error("Error calling Gemini API:", error);
     if (error instanceof Error) {
         if(error.message.includes('API key not valid')) {
-            throw new Error('Your API key is not valid. Please check it in the Settings tab.');
+            throw new Error('The configured API key is not valid. Please ensure it is set up correctly.');
         }
         if (error.message.includes('429')) {
              throw new Error('You have exceeded your quota. Please check your billing account or try again later.');
@@ -28,11 +31,8 @@ const handleError = (error: unknown): never => {
 }
 
 export async function generateAppCode(
-    prompt: string, 
-    apiKey: string
+    prompt: string
 ): Promise<{ code: CodeBundle; sources?: any[] }> {
-  const ai = new GoogleGenAI({ apiKey });
-
   try {
     const model = "gemini-2.5-flash";
     const contents = `User request: "${prompt}"`;
@@ -70,11 +70,8 @@ export async function generateAppCode(
 
 export async function getChatResponse(
     prompt: string,
-    apiKey: string,
     isThinkingMode: boolean
 ): Promise<string> {
-    const ai = new GoogleGenAI({ apiKey });
-
     try {
         const model = isThinkingMode ? "gemini-2.5-pro" : "gemini-2.5-flash";
         const config = isThinkingMode

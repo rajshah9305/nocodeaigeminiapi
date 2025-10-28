@@ -54,13 +54,15 @@ export const EditorPanel: React.FC<EditorPanelProps> = ({ code, onCodeChange }) 
           <TabButton type="css" label="CSS" />
           <TabButton type="javascript" label="JavaScript" />
         </div>
-        <button 
-          onClick={formatCode}
-          className="mr-2 p-2 rounded-md hover:bg-gray-100 transition-colors text-gray-500"
-          title="Format Code"
-        >
-          <WandSparkles className="h-4 w-4" />
-        </button>
+        <div className="flex items-center mr-2">
+            <button 
+                onClick={formatCode}
+                className="p-2 rounded-md hover:bg-gray-100 transition-colors text-gray-500"
+                title="Format Code"
+            >
+                <WandSparkles className="h-4 w-4" />
+            </button>
+        </div>
       </div>
       <div className="flex-1">
         <Editor
