@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AI Web App Builder</title>
+    <title>RAJ AI App Builder</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,9 +14,23 @@
         theme: {
           extend: {
             colors: {
-              primary: '#FF6B35',
-              'secondary-bg': '#F5F5F5',
-              'border-color': '#E0E0E0',
+              primary: {
+                DEFAULT: '#FF6B35',
+                dark: '#E05A2D',
+                light: '#FFE2D6',
+              },
+              gray: {
+                50: '#F9FAFB',
+                100: '#F3F4F6',
+                200: '#E5E7EB',
+                300: '#D1D5DB',
+                400: '#9CA3AF',
+                500: '#6B7280',
+                600: '#4B5563',
+                700: '#374151',
+                800: '#1F2937',
+                900: '#111827',
+              },
             },
             fontFamily: {
               sans: ['Inter', 'sans-serif'],
@@ -41,14 +55,26 @@
       }
     </script>
     <style>
-      .resizer {
-        width: 5px;
-        cursor: col-resize;
-        background-color: #F5F5F5;
-        transition: background-color 0.3s ease;
+      body {
+        background-color: #F3F4F6;
       }
-      .resizer:hover {
-        background-color: #E0E0E0;
+      .resizer {
+        width: 6px;
+        cursor: col-resize;
+        background-color: #F3F4F6;
+        transition: background-color 0.2s ease;
+      }
+      .resizer:hover, .resizer:active {
+        background-color: #E5E7EB;
+      }
+      .resizer-horizontal {
+        height: 6px;
+        cursor: row-resize;
+        background-color: #F3F4F6;
+        transition: background-color 0.2s ease;
+      }
+      .resizer-horizontal:hover, .resizer-horizontal:active {
+        background-color: #E5E7EB;
       }
       .chat-message-container {
         animation: fade-in 0.5s ease-out forwards;
@@ -64,16 +90,17 @@
       }
       ::-webkit-scrollbar {
         width: 8px;
+        height: 8px;
       }
       ::-webkit-scrollbar-track {
-        background: #f1f1f1;
+        background: transparent;
       }
       ::-webkit-scrollbar-thumb {
-        background: #ccc;
+        background: #D1D5DB;
         border-radius: 4px;
       }
       ::-webkit-scrollbar-thumb:hover {
-        background: #aaa;
+        background: #9CA3AF;
       }
     </style>
   <script type="importmap">

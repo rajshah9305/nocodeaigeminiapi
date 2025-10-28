@@ -27,7 +27,6 @@ export interface ModelResponseMessage extends BaseMessage {
 export interface ModelTextMessage extends BaseMessage {
     role: 'model';
     text: string;
-    isThinking?: boolean;
 }
 
 export type ChatMessage = UserMessage | ModelResponseMessage | ModelTextMessage;
