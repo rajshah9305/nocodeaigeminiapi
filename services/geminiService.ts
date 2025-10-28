@@ -64,24 +64,19 @@ export async function generateAppCode(
     return { code, sources };
 
   } catch (error) {
+    if (error instanceof SyntaxError) {
+        throw new Error("The AI returned an invalid response that could not be read. Please try regenerating the app.");
+    }
     handleError(error);
   }
 }
 
-export async function getChatResponse(
-    prompt: string,
-    isThinkingMode: boolean
-): Promise<string> {
+export async function getChatResponse(prompt: string): Promise<string> {
     try {
-        const model = isThinkingMode ? "gemini-2.5-pro" : "gemini-2.5-flash";
-        const config = isThinkingMode
-            ? { thinkingConfig: { thinkingBudget: 32768 } }
-            : undefined;
-
+        const model = "gemini-2.5-flash";
         const response = await ai.models.generateContent({
             model,
             contents: prompt,
-            ...(config && { config }),
         });
 
         return response.text;

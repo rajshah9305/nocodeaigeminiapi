@@ -4,7 +4,7 @@ import saveAs from 'file-saver';
 import { PreviewPanel } from './components/PreviewPanel';
 import { generateAppCode, getChatResponse } from './services/geminiService';
 import type { CodeBundle, ChatMessage, UserMessage, ModelResponseMessage, ModelTextMessage } from './types';
-import { Bot, Code, LoaderCircle, Send, User, RotateCw, Eye, BrainCircuit, Download, FileArchive } from 'lucide-react';
+import { Bot, Code, LoaderCircle, Send, User, RotateCw, Eye, BrainCircuit, AlertTriangle } from 'lucide-react';
 import { SidePanel } from './components/SidePanel';
 import { Header } from './components/Header';
 
@@ -99,7 +99,7 @@ const App: React.FC = () => {
 
   const handleAssistantMessage = async (text: string) => {
     try {
-        const responseText = await getChatResponse(text, false);
+        const responseText = await getChatResponse(text);
         const modelMessage: ModelTextMessage = { 
             id: (Date.now() + 1).toString(), 
             role: 'model', 
@@ -195,8 +195,9 @@ const App: React.FC = () => {
               
               <div className="bg-white rounded-xl p-4 shadow-xl">
                   {error && (
-                      <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded-md mb-3 text-sm">
-                          <p>{error}</p>
+                      <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-md mb-3 text-sm flex items-center gap-2">
+                        <AlertTriangle className="h-5 w-5 flex-shrink-0" />
+                        <p>{error}</p>
                       </div>
                   )}
                   <div className="relative">
@@ -270,27 +271,27 @@ const App: React.FC = () => {
         <div className="resizer-horizontal" onMouseDown={handleMouseDownVertical}></div>
 
         <div style={{ height: `${chatHeight}px` }} className="flex flex-col bg-white panel">
-          <div className="flex-1 bg-gray-50 p-4 overflow-y-auto space-y-4">
+          <div className="flex-1 bg-gray-50 p-4 overflow-y-auto space-y-6">
             {messages.map((msg) => (
               <div key={msg.id} className="chat-message-container max-w-4xl mx-auto">
                 {msg.role === 'user' ? (
                   <div className="flex items-start gap-3 justify-end">
-                      <div className="bg-primary text-white p-3 rounded-lg max-w-xl shadow-sm">
-                          <p className="whitespace-pre-wrap text-sm leading-relaxed">{msg.text}</p>
+                      <div className="bg-primary text-white p-4 rounded-xl rounded-tr-none max-w-xl shadow-sm">
+                          <p className="whitespace-pre-wrap text-base leading-relaxed">{msg.text}</p>
                       </div>
-                      <div className="bg-primary-light p-2 rounded-full flex-shrink-0"><User className="h-5 w-5 text-primary"/></div>
+                      <div className="bg-primary-light p-2 rounded-full flex-shrink-0 border border-primary/20"><User className="h-5 w-5 text-primary"/></div>
                   </div>
                 ) : (
                   <div className="flex items-start gap-3">
-                      <div className="bg-gray-200 p-2 rounded-full flex-shrink-0"><Bot className="h-5 w-5 text-gray-600"/></div>
-                      <div className="bg-white border border-gray-200 p-3 rounded-lg max-w-xl">
-                         {'text' in msg ? <p className="text-sm text-gray-700 leading-relaxed">{msg.text}</p> : (
+                      <div className="bg-gray-100 p-2 rounded-full flex-shrink-0 border border-gray-200"><Bot className="h-5 w-5 text-gray-500"/></div>
+                      <div className="bg-white border border-gray-200 p-4 rounded-xl rounded-tl-none max-w-xl shadow-sm">
+                         {'text' in msg ? <p className="text-base text-gray-800 leading-relaxed">{msg.text}</p> : (
                              <div>
-                              <p className="text-sm text-gray-500 mb-2.5">I've generated a new version of the app based on your request:</p>
-                              <div className="text-sm font-medium text-gray-800 p-3 bg-gray-50 rounded-md border border-gray-200 mb-3 italic">"{msg.originalPrompt}"</div>
+                              <p className="text-sm text-gray-600 mb-3">I've generated a new version of the app based on your request:</p>
+                              <div className="text-sm font-medium text-gray-800 p-3 bg-gray-50 rounded-md border border-gray-200 mb-4 italic">"{msg.originalPrompt}"</div>
                               <div className="flex space-x-2 mt-2">
-                                  <button onClick={() => handleSelectApp(msg)} className="flex items-center space-x-1.5 text-sm bg-primary/10 text-primary px-3 py-1.5 rounded-md hover:bg-primary/20 transition-colors font-medium"><Eye className="h-4 w-4"/><span>View App</span></button>
-                                  <button onClick={() => handleRegenerate(msg.originalPrompt)} className="flex items-center space-x-1.5 text-sm bg-gray-100 text-gray-600 px-3 py-1.5 rounded-md hover:bg-gray-200 transition-colors font-medium"><RotateCw className="h-4 w-4"/><span>Regenerate</span></button>
+                                  <button onClick={() => handleSelectApp(msg)} className="flex items-center space-x-2 text-sm bg-primary/10 text-primary px-4 py-2 rounded-lg hover:bg-primary/20 transition-colors font-semibold"><Eye className="h-4 w-4"/><span>View App</span></button>
+                                  <button onClick={() => handleRegenerate(msg.originalPrompt)} className="flex items-center space-x-2 text-sm bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors font-semibold"><RotateCw className="h-4 w-4"/><span>Regenerate</span></button>
                               </div>
                              </div>
                          )}
@@ -301,8 +302,8 @@ const App: React.FC = () => {
             ))}
              {isLoading && (
                 <div className="flex items-start gap-3 max-w-4xl mx-auto">
-                  <div className="bg-gray-200 p-2 rounded-full flex-shrink-0"><Bot className="h-5 w-5 text-gray-600"/></div>
-                  <div className="bg-white border border-gray-200 p-3 rounded-lg">
+                  <div className="bg-gray-100 p-2 rounded-full flex-shrink-0 border border-gray-200"><Bot className="h-5 w-5 text-gray-500"/></div>
+                  <div className="bg-white border border-gray-200 p-4 rounded-xl rounded-tl-none">
                     <div className="flex items-center space-x-1 dot-pulse">
                       <span className="h-2 w-2 bg-gray-500 rounded-full"></span>
                       <span className="h-2 w-2 bg-gray-500 rounded-full"></span>
@@ -315,7 +316,8 @@ const App: React.FC = () => {
           </div>
           <div className="p-4 bg-white/80 backdrop-blur-sm border-t border-gray-200 flex-shrink-0">
              {error && (
-              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded-md mb-3 text-sm max-w-4xl mx-auto">
+              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-md mb-3 text-sm max-w-4xl mx-auto flex items-center gap-2">
+                <AlertTriangle className="h-5 w-5 flex-shrink-0" />
                 <p>{error}</p>
               </div>
             )}
