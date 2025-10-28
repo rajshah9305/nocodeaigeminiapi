@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Web App Builder</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: '#FF6B35',
+              'secondary-bg': '#F5F5F5',
+              'border-color': '#E0E0E0',
+            },
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              mono: ['JetBrains Mono', 'monospace'],
+            },
+            keyframes: {
+              'fade-in': {
+                '0%': { opacity: '0', transform: 'translateY(10px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              },
+              'dot-pulse': {
+                '0%, 100%': { transform: 'scale(1)', opacity: '0.5' },
+                '50%': { transform: 'scale(1.2)', opacity: '1' },
+              }
+            },
+            animation: {
+              'fade-in': 'fade-in 0.5s ease-out forwards',
+              'dot-pulse': 'dot-pulse 1.5s infinite ease-in-out',
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      .resizer {
+        width: 5px;
+        cursor: col-resize;
+        background-color: #F5F5F5;
+        transition: background-color 0.3s ease;
+      }
+      .resizer:hover {
+        background-color: #E0E0E0;
+      }
+      .chat-message-container {
+        animation: fade-in 0.5s ease-out forwards;
+      }
+      .dot-pulse span {
+        animation: dot-pulse 1.4s infinite ease-in-out;
+      }
+      .dot-pulse span:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .dot-pulse span:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #ccc;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #aaa;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.27.0",
+    "file-saver": "https://aistudiocdn.com/file-saver@^2.0.5",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.548.0",
+    "@monaco-editor/react": "https://aistudiocdn.com/@monaco-editor/react@^4.7.0"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,5 @@
+{
+  "name": "AI Web App Builder",
+  "description": "A no-code AI application builder that transforms natural language descriptions into functional web applications using the Gemini API, featuring a real-time preview and code generation.",
+  "requestFramePermissions": []
+}
